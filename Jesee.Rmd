@@ -1,0 +1,102 @@
+---
+name: Jesse Mbaria
+surname: Mwangi
+#position: "Mr"
+#pronouns: He/Him
+profilepic: jay.jpg
+address: "Thika, 3917-01002"
+phone: 703705137
+www: jeseembariah.com
+email: "jessebaryah@gmail.com"
+twitter: jaymbaria
+github: jaymbaria
+linkedin: Jay
+aboutme: "A disciplined, Adaptable and motivated leather science and technology graduate, intending to continue personal development as a leather technologist. I think in terms of results and objectives. I am enthusiastic, and I work with decisiveness and conviction. I have a proactive attitude and find positive ways to stimulate and engage with people."
+date: "`r format(Sys.time(), '%B %Y')`"
+output:
+  vitae::awesomecv:
+    page_total: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+library(vitae)
+library(purrr)
+
+# install.packages("readxl") uncomment this if you need to install the package
+library(readxl)
+readExcelSheets <- function(filename){
+  # read all sheets in .xlsx 
+  all <- readxl::excel_sheets(filename)
+  # import each sheet into a list using readxl::read_excel
+  list <- map(all, function(x) readxl::read_excel(filename, sheet = x))
+  # save sheet name for each sheet (list)
+  names(list) <- all
+  # breaks up list and creates a dataframe for each sheet with df names matching sheet names
+  list2env(list, envir = .GlobalEnv)
+}
+
+
+jay <- here::here("jay.xlsx")
+readExcelSheets(jay)
+```
+
+# Research Project
+
+Did a Research project to determine the nutritional value of the tannery green fleshing for potential use in Aqua feeds formulation thus reduction of tannery solid waste. Hence replacement of fish meal with proteinaceous tannery solid waste will be the best approach to ease out solid waste disposal problem for environmentalist and also beneficial as an economic feed in aquaculture.
+
+
+# Education
+```{r}
+education %>% 
+  detailed_entries(what = degree,
+                   when = year,
+                   with = institution,
+                   where = where,
+                   why = details)
+```
+
+# Work Experience
+
+```{r}
+industry |> 
+  detailed_entries(what = institution,
+                   when = dates,
+                   with = role,
+                   where = where,
+                   why = details)
+```
+
+# Leadership
+
+```{r}
+leadership |> 
+  detailed_entries(what = institution,
+                   when = dates,
+                   with = role,
+                   where = where,
+                   why = details)
+```
+
+# Skills
+```{r}
+skills |> 
+  detailed_entries(with = skill)
+```
+
+# Referees
+```{r}
+library(tibble)
+tribble(
+  ~ Supervisor, ~ Department, ~ Institution, ~ Contact, ~Email,
+  "Mr. Joel Mwondu", "Leather science and technology", "University of Nairobi)", "+254717186315","Joelmwondu@uonbi.ac.ke",
+  "Mr. Dennis Kimaiga", "KALTS", "The Kenya Association of Leather Technologist and Scientist (KALTS)", " +254715431073"," dkimaiga@uonbi.ac.ke") %>%
+  detailed_entries(what = Institution, 
+                   where = Department, 
+                   with = Supervisor, 
+                   when = Contact, 
+                   why =Email)
+```
+
